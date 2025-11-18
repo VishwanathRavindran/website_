@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vishwanath Ravindran — Personal Website</title>
+  <meta name="description" content="Research homepage of Firstname Lastname — publications, preprints, projects." />
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css">
+  <style>
+    :root{
+      --bg:#ffffff; --fg:#0c1118; --muted:#4b5563; --line:#e3e7ee; --card:#f7f9fc; --link:#1a56db; --accent:#1a56db;
+      --mono: "Computer Modern Typewriter", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --serif: "Computer Modern Serif", Charter, Cambria, serif;
+      --sans: "Computer Modern Sans", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+    }
+    :root.dark { --bg:#0b0d10; --fg:#e8edf5; --muted:#a6b0bf; --line:#1f2937; --card:#10151c; --link:#9abaff; --accent:#9abaff; }
+    html { color-scheme: light dark; }
+    body{ margin:0; background:var(--bg); color:var(--fg); font: 17px/1.7 var(--sans);} 
+    .wrap{ max-width: 960px; margin: 0 auto; padding: 32px 20px; }
+    header{ display:flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom:1px solid var(--line); padding-bottom:20px; }
+    .name { font: 700 22px/1.2 var(--serif); letter-spacing:.2px; }
+    .tagline { color: var(--muted); font-size:14px; }
+    nav a{ color:var(--fg); text-decoration:none; margin:0 10px; padding:6px 8px; border-radius:8px; }
+    nav a:hover, nav a:focus{ outline:none; background:var(--line); }
+    .btn{ display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--fg); background:transparent; }
+    .btn:hover{ background:var(--line); }
+    .grid{ display:grid; grid-template-columns: 1fr; gap:16px; }
+    @media(min-width:760px){ .grid-2{ grid-template-columns: 2fr 1fr; } .grid-3{ grid-template-columns: repeat(3,1fr);} }
+    section{ padding: 28px 0; border-bottom:1px solid var(--line); }
+    h2{ font:700 20px/1.25 var(--serif); letter-spacing:.1px; margin:0 0 10px; color:var(--fg);} 
+    .muted{ color:var(--muted); }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; display:flex; flex-direction:column; }
+    .pub-title{ font-weight:650; }
+    .meta{ color:var(--muted); font-size: 13px; }
+    .tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .tag{ font-size:12px; padding:2px 8px; border:1px solid var(--line); border-radius:999px; color:var(--muted); }
+    .controls{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin: 10px 0 14px; }
+    .search{ border:1px solid var(--line); background:transparent; color:var(--fg); padding:8px 10px; border-radius:8px; min-width: 220px; }
+    .pill{ border:1px solid var(--line); padding:6px 10px; border-radius:999px; cursor:pointer; }
+    .pill[aria-pressed="true"]{ background:var(--fg); color:var(--bg); border-color:var(--fg); }
+    details{ margin-top:8px; }
+    code, pre{ font-family: var(--mono); font-size: 12.5px; }
+    footer{ padding-top:24px; color:var(--muted); font-size:13px; }
+    .footer-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap; 
+}
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    @media print{ nav, #theme, #filters, .controls, .tag, details{ display:none !important; } body{ background:#fff; color:#000; } .card{ background:#fff; } }
+
+    .thumb{ width:100%; aspect-ratio:16/9; border-radius:10px; background:linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.08)), var(--card); background-size:cover; background-position:center; background-image: var(--img), linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.08)); }
+    .gallery{ gap:14px; }
+    .gallery figure{ margin:0; }
+    .gallery img{ width:100%; height:200px; object-fit:cover; border-radius:12px; border:1px solid var(--line); background:var(--card); }
+    .grid-3{ grid-template-columns: repeat(3,1fr); align-items: stretch; }
+    .project-card{ min-height: 380px; display:flex; flex-direction:column; }
+
+
+.pub-main{
+  display:grid;
+  grid-template-columns: 1fr auto; 
+  gap:14px;
+  align-items:start;
+}
+@media (max-width: 600px){
+  .pub-main{ grid-template-columns: 1fr; } 
+}
+
+.pub-thumb{
+  width:140px;             
+  aspect-ratio:4/3;        
+  border-radius:10px;
+  background-size:cover;
+  background-position:center;
+  border:1px solid var(--line);
+}
+.kbadge{ display:none !important; }
+.abstract {
+  text-align: justify;
+  hyphens: auto;
+}
+.thumb {
+  width: 100%;
+  aspect-ratio: 16/9;   
+  border-radius: 10px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--line);
+  background-image: var(--img);
+}
+.proj-footer {
+  margin-top: auto; 
+}
+
+.proj-footer .links {
+  display: flex;
+  gap: 10px;          
+  flex-wrap: wrap;    
+}
+
+.proj-tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+}
+
+.project-card p {
+  text-align: justify;
+  hyphens: auto;
+}
+  </style>
+
+  <script>
+    try{
+      const saved = localStorage.getItem('theme');
+      if(saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)){
+        document.documentElement.classList.add('dark');
+      }
+    }catch(e){}
+  </script>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="name">Vishwanath Ravindran</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a id="theme" class="btn" href="#" aria-pressed="false" title="Toggle theme" onclick="toggleTheme(event)">🌓 Theme</a>
+<nav aria-label="Primary">
+  <a href="#publications">Publications</a>
+  <a href="#projects">Projects</a>
+  <a href="#contact">Contact</a>
+</nav>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section id="bio">
+        <div class="grid grid-2">
+          <div>
+            <p style="margin-top:0">
+ Hello! Here, I provide an overview of my research activities. My research interests are in the field of 
+  <em><span style="color: rgb(17, 0, 255);">mechanics of active materials, construction automation, product</span></em> and <em><span style="color: rgb(17, 0, 255);">
+    instrument design</span></em>.<br> I am pursuing my Master’s thesis (titled <span style="color: rgb(255, 0, 157);"><em>Biohybrid Compliant Mechanisms</em></span>) under the guidance of <a href="https://mecheng.iisc.ac.in/suresh/" target="_blank">Prof.&nbsp;G.&nbsp;K.&nbsp;Anathasuresh</a>. I completed my Bachelor’s thesis (on <span style="color: rgb(255, 0, 157);"><em>Flow of 3D printable concrete</em></span>) under the supervision 
+    of <a href="https://www.researchgate.net/profile/A-V-Rahul" target="_blank">Prof.&nbsp;A.&nbsp;V.&nbsp;Rahul</a> and <a href="https://thiyaguIITT.wixsite.com/acad" target="_blank">Prof.&nbsp;Thiyagarajan&nbsp;R</a>.
+</p>
+          </div>
+          <div>
+            <h3 class="muted" style="margin:0 0 6px; font-weight:600; letter-spacing:.2px; text-transform:uppercase; font-size:12px;">Education</h3>
+            <ul style="margin:0; padding-left:18px">
+              <li><strong>M.Tech. Mechanical Engineering,</strong> <br> Indian Institute of Science (IISc), Bengaluru, 2024–2026</li>
+              <li><strong>B.Tech. Civil Engineering,</strong> <br>Indian Institute of Technology Tirupati (IIT Tirupati), Yerpedu, 2020–2024</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="highlights">
+        <h2>Current works</h2>
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="meta">2025 · Project</div>
+            <div class="pub-title">Optimal trajectory planning for substantial mechanical advantage in compliant manipulators</div>
+            <p>Using relations for mechanical advantage of compliant mechanisms based on <em>kinetoelastics</em>, developed in prior works, an optimal control strategy for 'soft-touch' or 'hard-contact' of compliant manipulators is proposed.</p>
+            <div class="tags"><span class="tag">Compliant Mechanisms</span><span class="tag">Numerical Simulation</span></div>
+          </article>
+          <article class="card">
+            <div class="meta">2025 · Project</div>
+            <div class="pub-title">Psuedo-mobitlity of biological systems</div>
+            <p>Finding physically realizable degrees of freedom in biological systems by anotomical reconstruction</p>
+            <div class="tags"><span class="tag">Active materials</span><span class="tag">Complaint Mechanisms</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="publications">
+        <h2>Publications, Preprints & Patents</h2>
+        <div id="publist" class="grid"></div>
+      </section>
+
+      <section id="projects">
+        <h2>Selected Projects</h2>
+        <div class="controls">
+          <input id="pq" class="search" type="search" placeholder="Search projects…" oninput="filterProjects()" aria-label="Search projects" />
+          <div id="pfilters" role="group" aria-label="Project topic filters" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
+          <button class="pill" onclick="resetProjectFilters()">Reset</button>
+        </div>
+        <p id="projhint" class="muted" style="margin-top:-6px">Select a topic above to view matching projects (or type in the search box).</p>
+        <div id="projlist" class="grid grid-3"></div>
+      </section>
+
+      <section id="places">
+      <div class="grid grid-3 gallery">
+          <figure>
+            <img src="thumbs/chennai_railway.jpg" alt="Location 1" />
+            <figcaption class="muted">Chennai</figcaption>
+          </figure>
+          <figure>
+            <img src="thumbs/IITT2.jpg" alt="Location 2" />
+            <figcaption class="muted">Yerpedu</figcaption>
+          </figure>
+          <figure>
+            <img src="thumbs/IIScB-2.jpg" alt="Location 3" />
+            <figcaption class="muted">Bengaluru</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>
+          <a class="btn" href="mailto:6vishwanath@gamil.com">✉️ Email</a>
+          <a class="btn" href="slides/CV_oct_2025.pdf" target="_blank" rel="noopener">📄 CV (PDF)</a>
+        </p>
+      </section>
+
+<footer>
+  <div class="footer-row">
+    <div>
+      © <span id="year"></span> Vishwanath Ravindran ·
+      Last updated <time id="updated"></time>
+    </div>
+    <div>
+      Website made with aid of ChatGPT&nbsp;5.1
+    </div>
+  </div>
+</footer>
+
+    </main>
+  </div>
+
+<template id="pub-template">
+  <article class="card pub" data-tags="" data-kind="">
+    <div class="pub-main">
+      <div>
+        <div class="meta"></div>
+        <div class="pub-title"></div>
+        <div class="authors muted"></div>
+        <div class="links" style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;"></div>
+        <div class="tags" aria-label="tags"></div>
+
+        <details class="abstract-box">
+          <summary>Abstract</summary>
+          <div class="abstract"></div>
+        </details>
+      </div>
+
+      <div class="pub-thumb" aria-hidden="true"></div>
+    </div>
+  </article>
+</template>
+
+  <script>
+    "use strict";
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    function toggleTheme(e){ e && e.preventDefault(); const d=document.documentElement; const dark=d.classList.toggle('dark'); try{localStorage.setItem('theme', dark?'dark':'light');}catch(_){/* ignore */} }
+
+    const PUBLICATIONS = [
+      { year: 2025, type:'Journal', kind:'Publication', title:'Migration of particles suspended in yield stress fluids: Insights from numerical simulation of pipe flow of 3D printable concrete', authors:['Vishwanath R.','A. V. Rahul',' Thiyagarajan R'], venue:'Journal of Non-Newtonian Fluid Mechanics, Volume 332', links:[{label:'DOI', href:'https://doi.org/10.1016/j.jnnfm.2024.105305'}], tags:['Numerical Simulation','Concrete 3D Printing'], abstract:'In this work, we present a numerical model to analyse particle migration and its impact on local rheological properties when a high-yield stress suspension like 3D printable concrete is transported through a narrow circular pipe. The particle migration is studied through the lens of suspension rheology, where the effect of local particle concentration on rheological properties is accounted for using Krieger–Dougherty-type models. 3D printable mixtures with different aggregate-to-binder (a/b) ratios and flows at various discharge rates are evaluated. It is observed that, depending on the discharge rate and a/b ratio, the flow behaviour could deviate from that expected in a Poiseuille flow of Bingham fluid owing to shear-induced particle migration. Interestingly, as a consequence of particle migration, the formation of a local unsheared region close to the pipe wall is observed, apart from the plug zone at the pipe centre in the partially unsheared pipe flow of Bingham fluids. Often, for concrete pipe flow simulation, the particle size is not small enough to warrant local treatment since the finite size of the particle is not fully reflected in the flow domain. In this work, the developed numerical model is also extended to account for the finite particle size to study the transition between the sheared and unsheared regions and assess the effect of considering finite size in our simulation. Finally, the model’s capability to predict global pressure loss in pipe flow is assessed through comparisons with experimental results.', img:'thumbs/Migration_Image_1.png',  thumbWidth: 250,    thumbAspect: '9/9'    },
+      { year: 2024, type:'Conference', kind:null, title:'Inline mixing of accelerator for concrete 3D printing application: Numerical simulation using computational fluid dynamics', authors:['Vishwanath R.','A. V. Rahul',' Thiyagarajan R'], venue:'CONSEC 2024', links:[{label:'Slides', href:'slides/CONSEC_2024_Vishwanath_A_V_Rahul.pdf'}], tags:['Numerical Simulation','Concrete'], abstract:'Concrete 3D printing is a recent construction technique where an element is fabricated by extruding concrete through the nozzle of a 3D printer. Admixtures like accelerators may be used to improve the buildability of 3D printable concrete. However, unlike traditional concrete, where an accelerator would be added during the concrete mixing stage, in 3D printing, the accelerator addition is desirable to be done at the nozzle of the 3D printer. This study evaluates the inline-mixing capability of two common types of dynamic mixers, a paddle type and a ribbon type mixer, using computational fluid dynamics (CFD) studies. A multi-species CFD model is developed to simulate the advective mixing of accelerator and concrete. The local rheology of concrete is treated as a function of the local accelerator content to account for the impact of the accelerator on the instantaneous concrete rheology. From the results of the simulated model, the mixing homogeneity is quantified through the non-uniformity index. The results indicate a more homogeneous distribution of accelerator in the concrete can be achieved using a ribbon type mixer rather than a paddle type mixer. Also, the ribbon mixer is observed to offer better mechanical performance in comparison to the paddle type mixer. The effects of other geometric parameters on the intermixing performance are also evaluated. It is observed that the nominal advantage offered by the ribbon type mixer can be overcome through higher mechanical power to the paddle type mixer which is more easily realizable, considering the practical difficulty in the fabrication of ribbon type mixing blades.', img:'thumbs/Mixer_img.png' ,  thumbWidth: 400,    thumbAspect: '19/9'}, 
+      { year: 2025, type:'Patent', kind:'Patent', title:'A multi-fluid dynamic inline mixer cum extrusion system', authors:['Vishwanath R.','A. V. Rahul',' Thiyagarajan R'], venue:'Indian patent application id: 202541096238 (Patent documentation handled by CSRC team, IIT Tirupati)',  tags:['Concrete','Product Design']},
+      { year: 2025, type:'Conference', kind:null, title:'Revisiting the Mechanical Advantage of Compliant Mechaisms', authors:['Vishwanath R.','G. K. Ananthasuresh'], venue:'iNaCoMM 2025', links:[{label:'Slides', href:'slides/MA_pdf.pdf'}], tags:['Compliant Mechanisms'], abstract:' In this work, the foundational work on the mechanical advantage of compliant mechanisms by Salamon and Midha (1998) is revisited. Inspired by this work, some general relations are derived using kinetoelastic equations. Furthermore, the interpretation of types of mechanical advantages is clarified to avoid ambiguities and to address some shortcomings. The mechanical advantage for a general deformation of a single-input single-output compliant mechanism is derived using the tangent stiffness/compliance matrix. It is simplified for linearised deformations, and the relationships are expressed in terms of the eigenvalues and eigenvectors of the stiffness matrix. These results and their interpretation are elucidated with the examples of a compliant crimping mechanism and a compliant four-bar linkage.', img:'thumbs/MA_img.png' ,  thumbWidth: 300,    thumbAspect: '13/9'}, 
+      { year: 2025, type:'Conference', kind:null, title:'Computing the Centre of Elasticity in Planar Frames', authors:['Vishwanath R.','G. K. Ananthasuresh'], venue:'iNaCoMM 2025', links:[{label:'Slides', href:'slides/CoE_pdf.pdf'}], tags:['Compliant Mechanisms'], abstract:' At the centre of elasticity, the rotational and translational degrees of freedom are decoupled, i.e. linear forces applied at this point only cause translational displacement, and torque applied at this point causes only rotational displacement. This work focuses on the computation of the centre of elasticity of planar frames. The procedure to find the centre of elasticity of a cantilever beam is detailed, along with the theory on serial and parallel concatenation of frame elements. The theory is presented here in terms of only the stiffness or compliance matrices instead of the screw theory-based approach usually adopted in the literature. The goal of this work is to provide intuition for the centre of elasticity for design practitioners.', img:'thumbs/CoE_img.png' ,  thumbWidth: 300,    thumbAspect: '16/9'}, 
+      { year: 2025, type:'Conference', kind:null, title:'Cell-actuated Compliant Mechanisms', authors:['Vishwanath R.','G. K. Ananthasuresh'], venue:'MARSS 2025', tags:['Compliant Mechanisms'], abstract:' Our early work on cell-actuated compliant mechanisms, is presented with a review of past works done by other memebers (of the M2D2 lab) in this field.', img:'thumbs/cell_actuated.png' ,  thumbWidth: 500,    thumbAspect: '25/9'}, 
+];
+
+    function renderPubs(){
+      const wrap = document.getElementById('publist');
+      if(!wrap) return; // guard against missing container
+      wrap.innerHTML = '';
+      const tpl = document.getElementById('pub-template');
+      const data = [...PUBLICATIONS].sort((a,b)=> b.year - a.year);
+      data.forEach(pub => {
+        const node = tpl.content.cloneNode(true);
+        const art = node.querySelector('.pub');
+        art.dataset.tags = (pub.tags||[]).join(',');
+        art.dataset.kind = pub.kind||pub.type;
+        node.querySelector('.meta').innerHTML = `${pub.year} · ${pub.kind||pub.type}${pub.venue? ' · '+pub.venue:''} <span class="kbadge">${pub.tags?.[0]||''}</span>`;
+        node.querySelector('.pub-title').textContent = pub.title;
+        node.querySelector('.authors').textContent = pub.authors.join(', ');
+        node.querySelector('.abstract').textContent = pub.abstract || '';
+const absBox = node.querySelector('.abstract-box'); 
+if (pub.abstract && pub.abstract.trim() !== '') {
+  node.querySelector('.abstract').textContent = pub.abstract;
+} else if (absBox) {
+  absBox.remove(); 
+}
+
+
+
+        const links = node.querySelector('.links');
+        (pub.links||[]).forEach(l=>{
+          const a = document.createElement('a'); a.className='btn'; a.href=l.href; a.textContent=l.label; a.rel='noopener'; a.target = l.href.startsWith('#')? '' : '_blank';
+          links.appendChild(a);
+        });
+        const tagbox = node.querySelector('.tags');
+        (pub.tags||[]).forEach(t=>{ const s=document.createElement('span'); s.className='tag'; s.textContent=t; tagbox.appendChild(s); });
+const thumb = node.querySelector('.pub-thumb');
+if (pub.img) {
+  thumb.style.setProperty('background-image', `url('${pub.img}')`);
+  if (pub.thumbWidth)  thumb.style.width       = pub.thumbWidth + 'px';  
+  if (pub.thumbAspect) thumb.style.aspectRatio = pub.thumbAspect;       
+} else {
+  thumb.remove();// no thumbnail at all
+}
+wrap.appendChild(node);
+      });
+    }
+
+    const PROJECTS = [
+      { title:'Lab-scale concrete 3D printer', desc:'A lab-scale concrete 3D printer with a mobile was fabricated for testing a novel printhead at the Building Materials lab at IIT Tiruapti.', img:'thumbs/3d_printer.jpg',thumbAspect: '3/3', links:[{label:'Code', href:'slides/XYZ-code.zip'},{label:'Manual', href:'slides/Manual_for_Concrete_3D_printer.pdf'}], tags:['Product Design','Concrete'] },
+      { title:'Control of stress-induced morphogenesis of epithelial cells through kinematic constraints', desc:' Term project for "ME251 (IISc): Biomechanics".  The significance of mechanical constraints on the epithelial morphogenesis is investigated and the possibility of engineering particular forms of epithelial deformations at specific sites by prescribing appropriate mechanical constraints is looked into.', img:'thumbs/ME251.png', thumbAspect: '10.75/9',links:[{label:'Report', href:'slides/ME251__Biomech__Project_report.pdf'}], tags:['Structural Analysis','Active Matter'] },
+      { title:'Verification of analytical sensitivity relations through finite difference scheme', desc:' Programming assignment of "ME260 (IISc): Structural Optimization..". Analytical relations for a pressure-load optimization problem are derived and verified with numerical solution obtained through the finite-difference scheme, and the range of perturbation for which the finite difference scheme matches the analytical result is noted.', img:'thumbs/ME260_2.png', thumbAspect: '16/9',links:[{label:'Report', href:'slides/Structural_Optimization_Programming_Assignment_2.pdf'}], tags:['Structural Analysis'] },
+      { title:'Truss optimization for flexibility', desc:'  Programming assignment of "ME260 (IISc): Structural Optimization..". The objective of this work is to numerically understand the nature of truss structures optimized for flexibility. Depending on the constraints, some of these optimized structures are known to resemble mechanisms. It is of interest in this work to understand the mathematical aspects of it along with the numerical implementation of a programme to optimize the structure.', img:'thumbs/ME260_1.png', thumbAspect: '16/9',links:[{label:'Report', href:'slides/Structural_Optimization_Programming_Assignment_1.pdf'}], tags:['Compliant Mechanisms','Structural Analysis'] },
+      { title:'Energy Dissipation in Particle-based Impact Damper Systems: Investigation based on Elasto-plastic impact model', desc:'Term project for "ME701L (IIT Tirupati): Nonlinear Dynamical Systems". The non-linear dynamics of the particle damper system subject to impact load is assessed by employing the elasto-plastic model, which is used to accurately predict energy losses during a collision. Using the model, energy dissipation and other system characteristics of the particle damper system are studied, and the damping performance of the system is evaluated.', img:'thumbs/ME701L.png',  thumbAspect: '20/9',links:[{label:'Slides', href:'slides/ME701L_NLD_Final_Presentation_Particle_Impact_Damper_.pdf'},{label:'Report', href:'slides/ME701L_term_paper.pdf'}], tags:['Math','Numerical Simulation'] },
+      { title:'Solving Differential Equations using Quantum Computation', desc:'Review project for "Ph515 (IIT Tirupati): Basics of quantum computation". A procedure for a finite difference-based method to solve differential equations is presented, and quantum circuit implementation is shown. The procedure is applied to solve the 1-D transient heat equation.', img:'thumbs/PH515.png',  thumbAspect: '18/9',links:[{label:'Slides', href:'slides/PH515_Presentation_Differential_equtaions.pdf'},{label:'Report', href:'slides/PH515_term_paper.pdf'}], tags:['Math','Numerical Simulation'] },
+      { title:'Mass optimized Design of slender telescopic shaft based portable agitator for homogenizing concentrated slurries', desc:'The design was made for the 2023 edition Inter IIT technical meet. The design was performed adhering to proper standards as well as functional requirements expected in the operation, few key functional features include the rubber bellow for shielding the hollow shafts from detrimental substances in the slurry, water and spark-proofing the assembly and a special ancillary part for transport. The project was executed by a team of four (teammates: Arun Kumar, Sneha M. S., K. Chaitali Uday) in the span of a week. My role involved design calculations, assembly design and structural and fluid simulation. ', img:'thumbs/Solanis.png', links:[{label:'Report', href:'slides/Solanis_Product_Design_Challenge.pdf'}], tags:['Product Design','Numerical Simulation'] },
+      { title:'Stability analysis of mechanical systems', desc:' Notes prepared for "ME204 (IISc): Mechanics of Elastica". ', img:'thumbs/ME204.png', thumbAspect: '12/9',links:[{label:'Notes', href:'slides/ME204_Notes_Stabiity.pdf'}], tags:['Structural Analysis'] },
+      { title:'Detailed analysis of triple-axis cross pivot elastic pair', desc:' Design assignment of "ME254 (IISc): Compliant Mechanisms".  The performance of triple-axis cross pivot as an elastic pair is studied and relevant parameters of interest were calculated.', img:'thumbs/ME254.png', thumbAspect: '10/9',links:[{label:'Report', href:'slides/DA_1__ME254_.pdf'}], tags:['Compliant Mechanisms','Structural Analysis'] },
+      { title:'Estimation and construction-activity scheduling of Health Center-IIT Tirupati', desc:'Estimation of probable construction cost of the Health Centre at IIT Tirupati satisfying requirements imposed by architectural and structural drawings (costs calculated based on the rates suggested by the Delhi Schedule of Rates 2023). ', img:'thumbs/CE401L.png',thumbAspect: '4/3', links:[{label:'Report', href:'slides/Term_Project__CE401L_.pdf'},{label:'Slides', href:'slides/Term_project_CE401L_presentation_18_11_2023.pdf'}], tags:['Concrete','Construction'] },
+      { title:'Structural design calculation of a residential building', desc:'Term project for "CE514L (IIT Tirupati): Advanced Design of Concrete Structures"', img:'thumbs/CE514.png', thumbAspect: '3/3',links:[{label:'DCR', href:'slides/Term_Project_DCR__CE514L_.pdf'},{label:'DCR', href:'slides/Term_Project_DBR__CE514L_.pdf'}], tags:['Construction','Structural Analysis'] },
+      { title:'Bifurcation in dynamical systems', desc:'Review work for "MA511L (IIT Tirupati): Ordinary Differential Equations"', img:'thumbs/MA511L.png',  thumbAspect: '4.5/3',links:[{label:'Slides', href:'slides/MA511L_Presentation_Bifurcation.pdf'}], tags:['Math'] },
+
+
+    ];
+
+    function ensureProjectPills(tags){
+      const box = document.getElementById('pfilters');
+      if(!box) return;
+      box.innerHTML = '';
+      tags.forEach(t=>{
+        const b = document.createElement('button');
+        b.className='pill'; b.type='button'; b.textContent=t; b.setAttribute('aria-pressed','false');
+        b.addEventListener('click', ()=>{
+          b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true' ? 'false':'true');
+          filterProjects();
+        });
+        box.appendChild(b);
+      });
+    }
+
+    function renderProjects(){
+      const wrap = document.getElementById('projlist');
+      if(!wrap) return; // guard
+      wrap.innerHTML = '';
+      const allTags = new Set();
+      PROJECTS.forEach(p=> p.tags.forEach(t=> allTags.add(t)));
+      ensureProjectPills([...allTags].sort());
+
+      PROJECTS.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card project-card';
+const th = document.createElement('div');
+th.className = 'thumb';
+th.style.setProperty('--img', `url('${p.img}')`);
+
+if (p.thumbAspect) {
+  th.style.aspectRatio = p.thumbAspect;   
+}
+if (p.thumbHeight) {
+  th.style.height = p.thumbHeight + 'px'; 
+}
+        const ttl = document.createElement('div'); ttl.className='pub-title'; ttl.textContent = p.title;
+        const para = document.createElement('p'); para.textContent = p.desc;
+        const footer = document.createElement('div'); footer.className='proj-footer';
+        const tagbox = document.createElement('div'); tagbox.className='tags'; p.tags.forEach(t=>{ const s=document.createElement('span'); s.className='tag'; s.textContent=t; tagbox.appendChild(s); });
+        const linkbox = document.createElement('div'); linkbox.className='links';
+        (p.links||[]).forEach(l=>{ const a=document.createElement('a'); a.className='btn'; a.href=l.href; a.textContent=l.label; a.target=l.href.startsWith('#')?'':'_blank'; linkbox.appendChild(a); });
+        footer.append(linkbox, tagbox);
+        card.dataset.tags = p.tags.join(',');
+        card.append(th, ttl, para, footer);
+        wrap.appendChild(card);
+      });
+      filterProjects(); 
+    }
+
+    function filterProjects(){
+  const q = (document.getElementById('pq')?.value || '').trim().toLowerCase();
+  const active = $$('#pfilters .pill[aria-pressed="true"]').map(b => b.textContent);
+  const cards = $$('#projlist .card');
+
+  let shown = 0;
+  cards.forEach(el => {
+    const hay  = el.textContent.toLowerCase();
+    const tags = (el.dataset.tags || '').split(',').filter(Boolean);
+
+    const tagOk = active.length ? active.some(t => tags.includes(t)) : true;
+    const qOk   = q ? hay.includes(q) : true;
+
+    const visible = tagOk && qOk;
+    el.style.display = visible ? '' : 'none';
+    if (visible) shown++;
+  });
+
+  const hint = document.getElementById('projhint');
+  if (hint) {
+    const isFiltered = active.length > 0 || q.length > 0;
+    hint.style.display = (isFiltered && shown === 0) ? '' : 'none';
+  }
+}
+
+    function resetProjectFilters(){
+      const q = document.getElementById('pq'); if(q) q.value='';
+      $$('#pfilters .pill').forEach(b=> b.setAttribute('aria-pressed','false'));
+      filterProjects();
+    }
+
+    function selfTest(){
+      const issues = [];
+      if(!$('#publist')) issues.push('#publist missing');
+      if(!$('#projlist')) issues.push('#projlist missing');
+      if(typeof ensureProjectPills !== 'function') issues.push('ensureProjectPills missing');
+      if(!Array.isArray(PUBLICATIONS) || PUBLICATIONS.length<1) issues.push('PUBLICATIONS empty');
+      if(!Array.isArray(PROJECTS) || PROJECTS.length<1) issues.push('PROJECTS empty');
+
+      const defaultVisible = $$('#projlist .card').filter(c=> c.style.display !== 'none').length;
+      if(defaultVisible !== 0) issues.push('Default should hide all projects, but some are visible');
+
+      const pills = $$('#pfilters .pill');
+      if(pills.length >= 2){
+        const t1 = pills[0].textContent, t2 = pills[1].textContent;
+        pills[0].setAttribute('aria-pressed','true');
+        pills[1].setAttribute('aria-pressed','true');
+        filterProjects();
+        const visible = $$('#projlist .card').filter(c=> c.style.display !== 'none');
+        const expected = PROJECTS.filter(p=> p.tags.includes(t1) || p.tags.includes(t2)).length;
+        if(visible.length !== expected) issues.push(`Union filter mismatch (saw ${visible.length}, expected ${expected})`);
+        pills[0].setAttribute('aria-pressed','false');
+        pills[1].setAttribute('aria-pressed','false');
+        filterProjects();
+      }
+
+      const pq = $('#pq'); if(pq){ pq.value = 'frf'; filterProjects(); }
+      const foundBySearch = $$('#projlist .card').some(c=> c.style.display !== 'none');
+      if(!foundBySearch) issues.push('Search for "frf" should reveal at least one project');
+      if(pq){ pq.value=''; filterProjects(); }
+
+      const thumbs = $$('#publist .pub-thumb');
+      if(thumbs.length !== PUBLICATIONS.length) issues.push(`Pub thumbs mismatch: have ${thumbs.length}, expected ${PUBLICATIONS.length}`);
+
+      const pubCards = $$('#publist .pub');
+      if(pubCards.length !== PUBLICATIONS.length) issues.push(`Pub cards mismatch: have ${pubCards.length}, expected ${PUBLICATIONS.length}`);
+
+      if(issues.length) console.error('[SelfTest]', issues);
+      else console.log('[SelfTest] OK');
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('updated').textContent = new Date().toLocaleDateString(undefined,{year:'numeric', month:'short'});
+
+    (function init(){
+      try { renderPubs(); } catch(e){ console.error('RenderPubs failed', e); }
+      try { renderProjects(); } catch(e){ console.error('RenderProjects failed', e); }
+      try { selfTest(); } catch(e){ console.error('SelfTest failed', e); }
+    })();
+  </script>
+</body>
+</html>
